@@ -38,6 +38,7 @@ func watchFolder(path string) {
 
 func watch() {
 	root := root()
+	watcherLog("Start root: %v", root)
 	scanLower := scanLower()
 	if scanLower > 0 {
 		wtch, err := filepath.Abs(root)
@@ -49,6 +50,7 @@ func watch() {
 			root = strings.Join(split[0:len(split)-scanLower], "/")
 		}
 	}
+	watcherLog("Modified root: %v", root)
 	filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
 		if info.IsDir() && !isTmpDir(path) {
 			if len(path) > 1 && strings.HasPrefix(filepath.Base(path), ".") {
