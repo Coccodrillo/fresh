@@ -38,6 +38,17 @@ func watchFolder(path string) {
 
 func watch() {
 	root := root()
+	scanLower := scanLower()
+	if scanLower > 0 {
+		wtch, err := filepath.Abs(root)
+		if err == nil {
+			root = wtch
+		}
+		split := strings.Split(strings.TrimRight(root, "/"), "/")
+		if scanLower < len(split) {
+			root = strings.Join(split[0:len(split)-scanLower], "/")
+		}
+	}
 	filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
 		if info.IsDir() && !isTmpDir(path) {
 			if len(path) > 1 && strings.HasPrefix(filepath.Base(path), ".") {

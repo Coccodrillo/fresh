@@ -113,6 +113,14 @@ func root() string {
 	return settings["root"]
 }
 
+func scanLower() int {
+	i, err := strconv.Atoi(settings["scan_lower"])
+	if err != nil {
+		return 0
+	}
+	return i
+}
+
 func tmpPath() string {
 	return settings["tmp_path"]
 }
